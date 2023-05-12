@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.utils import timezone
 # Create your models here.
 
 
@@ -20,7 +21,7 @@ class Post(models.Model):
     counted_views = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
     login_require = models.BooleanField(default=False)
-    published_date = models.DateTimeField(null=True)
+    published_date = models.DateTimeField('date_published')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     class Meta:
@@ -28,6 +29,10 @@ class Post(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
 
     def snippets(self):
         return self.content[:100] + '...'

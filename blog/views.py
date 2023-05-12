@@ -5,10 +5,15 @@ from blog.forms import CommentForm
 from django.contrib import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils import timezone
+
 # Create your views here.
 
 def blog_view(request,**kwargs):
-    posts = Post.objects.filter(status=1).order_by('-published_date')
+    posts = Post.objects.filter(status=1,published_date__lte=timezone.now()).order_by('-published_date')
+
+    Post.status = True
+    posts = Post.objects.filter(status=1,published_date__lte=timezone.now()).order_by('-published_date')
     if kwargs.get('cat_name') != None:
         posts = posts.filter(category__name=kwargs['cat_name'])
     if kwargs.get('author_username') != None:
@@ -24,6 +29,7 @@ def blog_view(request,**kwargs):
     except EmptyPage:
         posts = posts.get_page(1)
     context = {'posts':posts}
+    
     return render(request,'blog/blog-home.html',context)
 
 def blog_single(request,pid):
@@ -36,6 +42,8 @@ def blog_single(request,pid):
             messages.add_message(request,messages.ERROR,'your comment didnt submiter')
     posts = Post.objects.filter(status=1)
     post = get_object_or_404(posts,pk=pid)
+    post.counted_views += 1
+    post.save()
     
     if not post.login_require:
         comments = Comment.objects.filter(post=post.id,approved=True)
@@ -60,6 +68,17 @@ def blog_search(request):
     context = {'posts':posts}
     return render(request,'blog/blog-home.html',context)
 
+def post_details(request,pid):
+    posts = Post.objects.all()
+    post = get_object_or_404(posts,pk=pid) 
+    post.counted_views += 1
+    post.save()
+    if post.published_date <= timezone.now():
+        post.status = True
+    else :
+        post.status = False
+    context = {'posts':posts}
+    return render(request,'blog/blog-home.html',context)
 
 def test(request):
     return render(request,'test.html')
