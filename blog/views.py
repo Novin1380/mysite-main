@@ -44,12 +44,22 @@ def blog_single(request,pid):
     post = get_object_or_404(posts,pk=pid)
     post.counted_views += 1
     post.save()
+    if Post.objects.filter(pk=pid+1).exists():
+            has_next=True
+    else:
+            has_next=False
+    if Post.objects.filter(pk=pid-1).exists():
+            has_previous=True
+    else:
+            has_previous=False
+    next_pid=pid+1
+    previous_pid=pid-1
     
     if not post.login_require:
         comments = Comment.objects.filter(post=post.id,approved=True)
         form = CommentForm()
-        context = {'post':post,'comments':comments,'form':form}
-
+        posts=get_object_or_404(Post,pk=pid,status=1)
+        context={'post':posts,'pid':pid,'has_next':has_next,'has_previous':has_previous,'next_pid':next_pid,'previous_pid':previous_pid,'comments':comments,'form':form}
         return render(request,'blog/blog-single.html',context)
     else:
         return HttpResponseRedirect(reverse('accounts:login'))
@@ -77,8 +87,51 @@ def post_details(request,pid):
         post.status = True
     else :
         post.status = False
+    next_post = post.get_next_by_id()
+    if next_post:
+        next_post_id=next_post.id
     context = {'posts':posts}
     return render(request,'blog/blog-home.html',context)
 
+'''def next_post(request,pid):
+    current_post = Post.objects.get(pk=pid)
+    nextpost= Post.objects.filter(pid__gt=current_post.id).order_by('id').first()
+    #next_post = get_object_or_404(pk=pid+1)
+    context = {'posts':next_post,'current_post':current_post}
+    print(next_post)
+    if next_post is not None :
+        return HttpResponseRedirect(reverse('blog/blog-single'))
+    else :
+        return HttpResponseRedirect(reverse('accounts:login'))'''
+    
+    
 def test(request):
     return render(request,'test.html')
+
+'''def post_list_view(request):
+    post_list=Post.objects.all()
+    paginator = paginator(post_list,1)
+    page_number = request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+    context = {'page_obj':page_obj}
+    return render(request,'blog/blog-single.html',context)'''
+
+'''def next_prev(request ,pid):
+    posts= Post.objects.filter(status=1).order_by("published_date")
+    Posts = posts.objects.get(pid=id)
+    nextpost = Posts -1
+    #nextpost= Post.objects.filter(pid__gt=posts.id).order_by('id').first()
+    prevpost= Post.objects.filter(pid__lt=pid).order_by('pid').last()
+    context = {'posts':Posts , 'nextpost':nextpost , 'prevpost':prevpost }
+    return render(request,'blog/blog-single.html',context)'''
+
+'''def previous_post_view(request, pid):
+    previous_post = Post.objects.filter(pid__lt=pid).order_by('pid').last()
+    context= {'previous_post':previous_post}
+    return render(request,'blog/blog-single.html',context)'''
+
+    
+
+
+
+

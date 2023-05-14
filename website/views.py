@@ -13,15 +13,36 @@ def about_view(request):
     return render(request,'website/about.html')
 
 
-def contact_view(request):
+'''def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            post=form.save(commit=False)
+            post.name="anonymous"
             form.save()
             messages.add_message(request,messages.SUCCESS,'your ticket submited successfully')
         else:
             messages.add_message(request,messages.ERROR,'your ticket didnt submited')
     form = ContactForm()
+    return render(request,'website/contact.html',{'form':form})'''
+
+def contact_view(request):
+    if request.method =='POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            ContactForm.name = form.cleaned_data['name']
+            ContactForm.email = form.cleaned_data['email']
+            ContactForm.message = form.cleaned_data['message']
+            ContactForm.subject = form.cleaned_data.get("subject","No subject")
+            
+            post=form.save(commit=False)
+            post.name="anonymous"
+            post.save()
+            messages.success(request,'your ticket submited successfuly')
+            form.save()
+    else:
+        messages.add_message(request,messages.ERROR,"your ticket didn't submited")
+    form=ContactForm()
     return render(request,'website/contact.html',{'form':form})
 
 def newsletter_view(request):
