@@ -69,3 +69,7 @@ def test_view(request):
     
     form = ContactForm()
     return render(request,'test.html',{'form':form})
+
+
+def error_404(request,exception):
+    return render(request,'404.html')

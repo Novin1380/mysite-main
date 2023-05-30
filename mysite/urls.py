@@ -21,6 +21,7 @@ from django.contrib.sitemaps.views import sitemap
 from website.sitemaps import StaticViewSitemap
 from blog.sitemaps import BlogSitemap
 from django.contrib.auth import views as views
+from django.conf.urls import handler404
 
 
 sitemaps = {
@@ -47,6 +48,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
+
+handler404 = 'website.views.error_404'
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
