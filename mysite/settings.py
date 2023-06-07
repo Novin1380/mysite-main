@@ -39,9 +39,19 @@ INSTALLED_APPS = [
     'accounts',
     'website',
     'blog',
+    'compressor'
 ]
 
 
+#django compressor 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
 
 
 # robots 

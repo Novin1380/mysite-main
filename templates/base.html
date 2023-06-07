@@ -1,4 +1,5 @@
 {% load static %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -22,15 +23,33 @@
     <!--
 			CSS
 			============================================= -->
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    {% endcompress %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% endcompress %}
 </head>
 
 <body>
@@ -195,20 +214,46 @@
     </footer>
     <!-- End footer Area -->
 
+    {% compress js %}
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/popper.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    {% endcompress %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    {% compress js %}
     <script src="{% static 'js/jquery-ui.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/easing.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/hoverIntent.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/superfish.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/mail-script.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
     <script src="{% static 'js/main.js' %}"></script>
+    {% endcompress %}
 </body>
 
 </html>

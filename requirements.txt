@@ -10,3 +10,5 @@ Faker
 django-compressor
 django-debug-toolbar
 mysqlclient
+django_compressor
+csscompressor
