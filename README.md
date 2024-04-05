@@ -6,8 +6,8 @@
     Django Tutorial Project
   </h1>
   <h3 align="center"> This is a full blog website backend written with django </h3>
-  <h5 align="center"> This backend model is written by fbv( Functional Based View) method </h5>
-<p align="center">The full project for Django fundemental course in maktabkhooneh.org.</p>
+  <h4 align="center"> This backend model is written by fbv( Functional Based View) method </h4>
+<h6 align="center">The full project for Django fundemental course in maktabkhooneh.org.</h6>
 </p>
 
 ### Overview
